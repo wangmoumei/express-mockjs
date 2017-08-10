@@ -2,9 +2,9 @@
 
 ### 原作者[52cik/express-mockjs](https://github.com/52cik/express-mockjs)  
 
-### 基于Mockjs
+### 基于Mockjs
 
-随机参数返回random用法 详见文档：[Mock.js 0.1 文档](http://mockjs.com/0.1/#Mock)  
+随机参数返回random用法 详见文档：[Mock.js 0.1 文档](http://mockjs.com/0.1/#Mock)  
 * [Mock 例子](http://mockjs.com/examples.html)  
 
 
@@ -29,7 +29,7 @@ var app = express()
 // 使用默认路径（不推荐） /
 // app.use(mockjs(path.join(__dirname, 'mocks')))
 
-// 自定义路径 /api 映射mocks文件夹
+// 自定义路径 /api 映射mocks文件夹
 app.use('/api', mockjs(path.join(__dirname, 'mocks')))
 
 // 这里可以添加你的自定义代码.
