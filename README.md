@@ -100,6 +100,7 @@ app.listen(3000);
 即可以访问 <http://localhost:3000/api/api-access-path> 查看实际效果.
 
 当然，你也可以直接使用js文件书写。
+<http://localhost:3000/api/home-links>
 
 ``` js
 // /mocks/demo1.js
@@ -122,6 +123,7 @@ module.exports = {
 ```
 
 或者直绑定函数：
+<http://localhost:3000/api/user?uid=233>
 
 ``` js
 // /mocks/demo2.js
@@ -159,23 +161,3 @@ module.exports = function (req) {
   };
 };
 ```
-
-
-
-[travis-url]: https://travis-ci.org/52cik/express-mockjs
-[travis-image]: https://img.shields.io/travis/52cik/express-mockjs/master.svg?label=linux
-
-[coveralls-url]: https://coveralls.io/github/52cik/express-mockjs?branch=master
-[coveralls-image]: https://coveralls.io/repos/52cik/express-mockjs/badge.svg?branch=master&service=github
-
-[license-url]: https://opensource.org/licenses/MIT
-[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
-
-[dependencies-url]: https://david-dm.org/52cik/express-mockjs
-[dependencies-image]: https://img.shields.io/david/52cik/express-mockjs.svg?style=flat
-
-[node-url]: https://nodejs.org
-[node-image]: https://img.shields.io/badge/node-%3E%3D%200.10.0-brightgreen.svg
-
-
-[nodemon]: https://nodemon.io
