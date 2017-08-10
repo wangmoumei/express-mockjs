@@ -1,27 +1,23 @@
 # express-mockjs
 
-> express mockjs api server
+### 原作者[52cik/express-mockjs](https://github.com/52cik/express-mockjs)  
 
-[![Linux Build][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
-[![Dependencies][dependencies-image]][dependencies-url]
-[![node][node-image]][node-url]
-[![license MIT][license-image]][license-url]
+### 基于Mockjs
 
-
-[中文文档](README_CN.md)
+随机参数返回random用法 详见文档：[Mock.js 0.1 文档](http://mockjs.com/0.1/#Mock)  
+* [Mock 例子](http://mockjs.com/examples.html)  
 
 
-## How to use it
+## 如何使用
 
-### Installation
+### 安装
 
 ``` sh
 $ npm install --save-dev express-mockjs
 ```
 
 
-### Examples
+### 例子
 
 ``` js
 var path = require('path')
@@ -30,61 +26,57 @@ var mockjs = require('express-mockjs')
 
 var app = express()
 
-// Using the default path /
-app.use(mockjs(path.join(__dirname, 'mocks')))
+// 使用默认路径（不推荐） /
+// app.use(mockjs(path.join(__dirname, 'mocks')))
 
-// or custom path /api
+// 自定义路径 /api 映射mocks文件夹
 app.use('/api', mockjs(path.join(__dirname, 'mocks')))
 
-// Add your middleware here, etc.
+// 这里可以添加你的自定义代码.
 
 app.listen(3000);
 ```
 
-You can then access the <http://localhost:3000/api> to view API documents.
+然后你可以访问 <http://localhost:3000/api> 查看API文档。
 
-**Recommended using [nodemon][nodemon] to monitor auto restart services**
-
-
-### Mock JSON
-
-* [Mock.js 0.1 doc](https://github.com/nuysoft/Mock/wiki)  
-* [Mock Sample](http://mockjs.com/examples.html)  
+**推荐使用 [nodemon][nodemon] 监视自动重启服务**
 
 
-### Examples
+
+
+
+### 例子
 
 ```
 .
 ├── mocks
-    ├── home
-    ⎪   ├── data.json
-    ├── user
-    ⎪   ├── data.js
-    ⎪   ├── data.json
-    ├── game
-        ├── data.json
+    ├── demo.json
+    ├── demo1.js
+    ├── demo2.js
+
 ```
 
 
 
-## data.json
+## demo.json
 
-`Mock JSON` here is not a real JSON file, and more like a JS file, so you want to use the following format.
 
-> Hypothetical file in 'mocks/home/test.json'
+> 假设我们有个文件 'mocks/demo.json' 内容为:
 
 ``` js
 /**
- * Interface function description
+ * 接口描述
  *
  * @url /api-access-path
  *
- * Parameter description and other instructions.
- * uid: user ID
- * name: username
- * email: the email
- * etc.
+ * GET: 请求方法及参数
+ *   uid 这是请求的用户ID
+ *
+ * 参数描述和其他说明。
+ * uid: 用户ID
+ * name: 用户名
+ * email: 邮箱
+ * 等等其他描述.
  */
 
 {
@@ -92,29 +84,35 @@ You can then access the <http://localhost:3000/api> to view API documents.
   "result|5": [
     {
       "uid|+1": 1,
-      "name": "@name",
+      "name": "@cname",
       "email": "@email"
     }
   ]
 }
 ```
 
-Then you can access the <http://localhost:3000/api/api-access-path> through the browser.
-
-Of course, you can also use the JS file directly.
+接口访问地址
 
 ``` js
+  @url /api-access-path
+```
+
+即可以访问 <http://localhost:3000/api/api-access-path> 查看实际效果.
+
+当然，你也可以直接使用js文件书写。
+
+``` js
+// /mocks/demo1.js
 /**
- * home page links
+ * 首页 - 友情链接
  *
  * @url /home-links
  *
- * Here you can write a detailed description
- * of the parameters of the information.
+ * 在这里你可以写详细的说明参数的信息
  */
 
 module.exports = {
-  "code": function () { // simulation error code, 1/10 probability of error code 1.
+  "code": function () { // 1/10 的概率返回错误码 1.
     return Math.random() < 0.1 ? 1 : 0;
   },
   "list|5-10": [
@@ -123,36 +121,37 @@ module.exports = {
 };
 ```
 
-Or export function.
+或者直绑定函数：
 
 ``` js
+// /mocks/demo2.js
 /**
- * user page - user info
+ * 用户页面 - 用户信息
  *
  * @url /user?uid=233
  *
- * GET: Request method and parameter
- *   uid This is the requested userID
+ * GET: 请求方法及参数
+ *   uid 这是请求的用户ID
  *
- * Here you can write a detailed description
- * of the parameters of the information.
+ * 在这里你可以写详细的说明参数的信息
  */
 
 module.exports = function (req) {
+  // express 的 req 对象
   var uid = req.query.uid;
 
-  if (!uid) {
+  if (!uid) { // 当没有用户ID时返回错误信息
     return {
       code: -1,
       msg: 'no uid',
     }
   }
 
-  return {
+  return { // 返回mock的用户信息，但用户id固定
     code: 0,
     data: {
       "uid": +uid,
-      "name": "@name",
+      "name": "@cname",
       "age|20-30": 1,
       "email": "@email",
       "date": "@date",
